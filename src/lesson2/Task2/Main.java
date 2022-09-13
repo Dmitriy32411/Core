@@ -1,8 +1,8 @@
 package lesson2.Task2;
 
-import java.util.Arrays;
-public class Main {
+import java.util.*;
 
+public class Main {
 
     public static void main(String[] args) {
         new Main().returnPairNumbers(new int[]{3, 4, 2, 7},10);
@@ -10,17 +10,23 @@ public class Main {
         new Main().returnPairNumbers(new int[]{3, 4, 4, 7},8);
         new Main().returnPairNumbers(new int[]{3, 8, 2, 7},15);
         new Main().returnPairNumbers(new int[]{3, 6, 2, 7},13);
+
+        new Main().returnPairNumbers(new int[]{5, 4, 2, 9},10);
+
+
     }
 
-    private void returnPairNumbers(int[] arr, int sumOfTwoNumbers){
-        int returnArr[] = new int[2];
+    private void returnPairNumbers(int[] arr, int sumOfTwo){
 
-        for (int n = 0; n < arr.length; n++) {
-            int finalN = n;
-            if (Arrays.stream(arr).anyMatch(x->x==sumOfTwoNumbers-arr[finalN])){
-                returnArr= new int[]{arr[n],sumOfTwoNumbers-arr[n]};
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < arr.length; i++){
+            if (map.containsKey(sumOfTwo - arr[i])){
+                System.out.println("["+arr[map.get(sumOfTwo - arr[i])]+","+arr[i]+"]");
             }
-        }System.out.println("["+returnArr[0]+","+returnArr[1]+"]");
+            map.put(arr[i], i);
+        }
 
     }
+
 }
