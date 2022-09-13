@@ -38,28 +38,28 @@ public class Main {
         }
     }
 
-    private static Person[] RAW_DATA = null;
-//            new Person[]{
-//
-//            null,
-//
-//            new Person(0, null),
-//            new Person(0, "Harry"),
-//
-//            new Person(0, "Harry"),
-//            new Person(0, "Harry"), // дубликат
-//            new Person(1, "Harry"), // тёзка
-//            new Person(2, "Harry"),
-//            new Person(3, "Emily"),
-//            new Person(4, "Jack"),
-//            new Person(4, "Jack"),
-//            new Person(5, "Amelia"),
-//            new Person(5, "Amelia"),
-//            new Person(6, "Amelia"),
-//            new Person(7, "Amelia"),
-//            new Person(8, "Amelia"),
-//
-//    };
+    private static Person[] RAW_DATA = /**null;*/
+            new Person[]{
+
+            null,
+
+            new Person(0, null),
+            new Person(0, "Harry"),
+
+            new Person(0, "Harry"),
+            new Person(0, "Harry"), // дубликат
+            new Person(1, "Harry"), // тёзка
+            new Person(2, "Harry"),
+            new Person(3, "Emily"),
+            new Person(4, "Jack"),
+            new Person(4, "Jack"),
+            new Person(5, "Amelia"),
+            new Person(5, "Amelia"),
+            new Person(6, "Amelia"),
+            new Person(7, "Amelia"),
+            new Person(8, "Amelia"),
+
+    };
 
     public static Predicate <Person> noNullPerson= Objects::nonNull;
     public static Predicate <Person> noNullName= person->person.getName()!=null;
