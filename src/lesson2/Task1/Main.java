@@ -1,7 +1,7 @@
 package lesson2.Task1;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
 
 
 public class Main {
@@ -38,46 +38,53 @@ public class Main {
         }
     }
 
-    private static Person[] RAW_DATA = new Person[]{
+    private static Person[] RAW_DATA = null;
+//            new Person[]{
+//
+//            null,
+//
+//            new Person(0, null),
+//            new Person(0, "Harry"),
+//
+//            new Person(0, "Harry"),
+//            new Person(0, "Harry"), // дубликат
+//            new Person(1, "Harry"), // тёзка
+//            new Person(2, "Harry"),
+//            new Person(3, "Emily"),
+//            new Person(4, "Jack"),
+//            new Person(4, "Jack"),
+//            new Person(5, "Amelia"),
+//            new Person(5, "Amelia"),
+//            new Person(6, "Amelia"),
+//            new Person(7, "Amelia"),
+//            new Person(8, "Amelia"),
+//
+//    };
 
-            null,
-
-            new Person(0, null),
-            new Person(0, "Harry"),
-
-            new Person(0, "Harry"),
-            new Person(0, "Harry"), // дубликат
-            new Person(1, "Harry"), // тёзка
-            new Person(2, "Harry"),
-            new Person(3, "Emily"),
-            new Person(4, "Jack"),
-            new Person(4, "Jack"),
-            new Person(5, "Amelia"),
-            new Person(5, "Amelia"),
-            new Person(6, "Amelia"),
-            new Person(7, "Amelia"),
-            new Person(8, "Amelia"),
-
-    };
-
+    public static Predicate <Person> noNullPerson= Objects::nonNull;
+    public static Predicate <Person> noNullName= person->person.getName()!=null;
+    public static Predicate <Person> noNull= noNullPerson.and(noNullName);
+    static boolean ThisArrayIsNull(Person[] array) {
+        return array != null;
+    }
 
     public static void main(String[] args) {
-        Map<String,List<String>> personMap = Arrays.stream(RAW_DATA)
-                .filter(person -> Objects.nonNull(person)&&person.getName()!=null)
-                .distinct()
-                .sorted(Comparator.comparing(Person::getName))
-                .collect(Collectors.groupingBy(Person::getName,
-                        Collectors.mapping(Person::getName,Collectors.toList())));
 
+       if (ThisArrayIsNull(RAW_DATA)){
+           Map<String,List<String>> personMap = Arrays.stream(RAW_DATA)
+                   .filter(noNull)
+                   .distinct()
+                   .sorted(Comparator.comparing(Person::getName))
+                   .collect(Collectors.groupingBy(Person::getName,
+                           Collectors.mapping(Person::getName,Collectors.toList())));
 
-        Map<String,List<String>> sortedPersonMap = personMap.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey())
-                .collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue));
-
-        for (Map.Entry<String,List<String>> entry:sortedPersonMap.entrySet()){
-            System.out.println("Key:" + entry.getKey()+ "\nValue: " + entry.getValue().size());
-        }
+           Map<String,List<String>> sortedPersonMap = personMap.entrySet().stream()
+                   .sorted(Map.Entry.comparingByKey())
+                   .peek(person-> System.out.println("Key:" + person.getKey()+ "\nValue: " + person.getValue().size()))
+                   .collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue));
+       }System.out.println("This array is NULL.");
 
 
     }
+
 }
